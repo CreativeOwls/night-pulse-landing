@@ -1,11 +1,23 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
+import { DeckGenerator } from "@/components/dashboard/DeckGenerator";
+import { DrinksChart } from "@/components/dashboard/DrinksChart";
+import { KpiGrid } from "@/components/dashboard/KpiGrid";
+import { OperationalRead } from "@/components/dashboard/OperationalRead";
+import { PulseAssistant } from "@/components/dashboard/PulseAssistant";
+import { RevenueDonut } from "@/components/dashboard/RevenueDonut";
+import { TrafficChart } from "@/components/dashboard/TrafficChart";
 import { supabase } from "@/integrations/supabase/client";
+import { VENUE } from "@/lib/nightpulse-data";
 
-const title = "Dashboard — Night Pulse";
-const description = "Your signed-in Night Pulse workspace, ready for the hackathon build.";
+const title = "NightPulse AI — LIV Miami Friday Night Recap";
+const description =
+  "Nightclub operations and revenue intelligence dashboard: door flow, bottle service, VIP spend and AI recommendations for LIV Miami.";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
@@ -26,6 +38,10 @@ function Dashboard() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const [date, setDate] = useState(VENUE.date);
+  const [assistantOpen, setAssistantOpen] = useState(false);
+  const [deckOpen, setDeckOpen] = useState(false);
+
   const handleSignOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -34,20 +50,46 @@ function Dashboard() {
   };
 
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center bg-background px-4">
-      <div className="bg-center-glow pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="bg-vignette pointer-events-none absolute inset-0" aria-hidden="true" />
+    <div className="np-app-bg min-h-screen w-full">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-5 p-4 sm:p-6">
+        <DashboardHeader
+          date={date}
+          onDateChange={setDate}
+          onAskAgent={() => setAssistantOpen(true)}
+          onGenerateDeck={() => setDeckOpen(true)}
+        />
 
-      <div className="relative z-10 flex w-full max-w-xl flex-col items-center gap-6 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">You're signed in</h1>
-        <p className="text-sm text-muted-foreground">
-          Signed in as {user.email ?? user.id}. This is the scaffold workspace — the hackathon
-          feature gets built here.
-        </p>
-        <Button variant="outline" onClick={handleSignOut}>
-          Sign out
-        </Button>
+        <main className="flex flex-col gap-5">
+          <KpiGrid />
+
+          <section
+            aria-label="Analytics"
+            className="grid grid-cols-1 gap-5 xl:grid-cols-4 [&>*:first-child]:xl:col-span-2"
+          >
+            <TrafficChart />
+            <DrinksChart />
+            <RevenueDonut />
+          </section>
+
+          <OperationalRead />
+        </main>
+
+        <footer className="flex flex-wrap items-center justify-between gap-3 pb-4 text-xs text-muted-foreground">
+          <span>
+            Signed in as {user.email ?? user.id} · {date}
+          </span>
+          <Button variant="ghost" size="sm" className="gap-2" onClick={() => void handleSignOut()}>
+            <LogOut className="h-4 w-4" /> Sign out
+          </Button>
+        </footer>
       </div>
-    </main>
+
+      <PulseAssistant
+        open={assistantOpen}
+        onOpenChange={setAssistantOpen}
+        onOpenDeck={() => setDeckOpen(true)}
+      />
+      <DeckGenerator open={deckOpen} onOpenChange={setDeckOpen} />
+    </div>
   );
 }
