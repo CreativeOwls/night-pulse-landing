@@ -1,15 +1,12 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
-
-import { supabase } from "@/integrations/supabase/client";
+import { createFileRoute } from "@tanstack/react-router";
 
 import { ConstellationBackdrop } from "@/components/ConstellationBackdrop";
-import { GoogleSignInButton } from "@/components/GoogleSignInButton";
+import { EnterButton } from "@/components/EnterButton";
 import { Wordmark } from "@/components/Wordmark";
 
 const title = "Night Pulse";
 const description =
-  "Night Pulse — a dark, living constellation landing page. Sign in with Google to get started.";
+  "Night Pulse — a dark, living constellation landing page. Enter to open the NightPulse AI dashboard.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,20 +23,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    let active = true;
-
-    supabase.auth.getSession().then(({ data }) => {
-      if (active && data.session) navigate({ to: "/dashboard", replace: true });
-    });
-
-    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) navigate({ to: "/dashboard", replace: true });
-    });
-
-    return () => {
+  return () => {
       active = false;
       sub.subscription.unsubscribe();
     };
@@ -53,7 +37,7 @@ function Index() {
 
       <div className="relative z-10 flex w-full max-w-[92rem] flex-col items-center gap-8 sm:gap-10">
         <Wordmark />
-        <GoogleSignInButton />
+        <EnterButton />
       </div>
     </main>
   );
