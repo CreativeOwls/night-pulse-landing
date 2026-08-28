@@ -176,3 +176,50 @@
     color: var(--color-foreground);
   }
 }
+
+/* --- Night Pulse landing --- */
+
+@utility bg-center-glow {
+  background-image: var(--glow-center);
+}
+
+@utility bg-vignette {
+  background-image: var(--vignette);
+}
+
+@utility font-system {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+@keyframes pulse-hue {
+  0%,
+  100% {
+    color: var(--accent-blue);
+  }
+  25% {
+    color: var(--accent-red);
+  }
+  50% {
+    color: var(--accent-yellow);
+  }
+  75% {
+    color: var(--accent-green);
+  }
+}
+
+@utility animate-pulse-hue {
+  animation: pulse-hue 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-hue {
+    animation: none;
+  }
+}
