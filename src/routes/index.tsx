@@ -46,12 +46,12 @@ function Index() {
   }, [navigate]);
 
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background px-4">
+    <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background px-4 py-10 sm:px-6 lg:px-8">
       <ConstellationBackdrop />
       <div className="bg-center-glow pointer-events-none absolute inset-0" aria-hidden="true" />
       <div className="bg-vignette pointer-events-none absolute inset-0" aria-hidden="true" />
 
-      <div className="relative z-10 flex w-full max-w-[92rem] flex-col items-center gap-10">
+      <div className="relative z-10 flex w-full max-w-[92rem] flex-col items-center gap-8 sm:gap-10">
         <Wordmark />
         <GoogleSignInButton />
       </div>
