@@ -62,10 +62,7 @@ function Dashboard() {
         <main className="flex flex-col gap-5">
           <KpiGrid />
 
-          <section
-            aria-label="Analytics"
-            className="grid grid-cols-1 gap-5 xl:grid-cols-4 [&>*:first-child]:xl:col-span-2"
-          >
+          <section aria-label="Analytics" className="grid grid-cols-1 gap-5 xl:grid-cols-4">
             <TrafficChart />
             <DrinksChart />
             <RevenueDonut />
