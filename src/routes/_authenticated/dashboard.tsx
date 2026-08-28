@@ -12,7 +12,6 @@ import { OperationalRead } from "@/components/dashboard/OperationalRead";
 import { PulseAssistant } from "@/components/dashboard/PulseAssistant";
 import { RevenueDonut } from "@/components/dashboard/RevenueDonut";
 import { TrafficChart } from "@/components/dashboard/TrafficChart";
-import { supabase } from "@/integrations/supabase/client";
 import { DEFAULT_DATE, getDataset } from "@/lib/nightpulse-data";
 import { buildDeck } from "@/lib/deck";
 
@@ -35,7 +34,6 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 });
 
 function Dashboard() {
-  const { user } = Route.useRouteContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -45,10 +43,9 @@ function Dashboard() {
   const [assistantOpen, setAssistantOpen] = useState(false);
   const [deckOpen, setDeckOpen] = useState(false);
 
-  const handleSignOut = async () => {
+  const handleExit = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
-    await supabase.auth.signOut();
     navigate({ to: "/", replace: true });
   };
 
@@ -82,10 +79,10 @@ function Dashboard() {
 
         <footer className="flex flex-col items-start gap-3 pb-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <span className="min-w-0 break-words">
-            Signed in as {user.email ?? user.id} · {date}
+            Demo mode · {date}
           </span>
-          <Button variant="ghost" size="sm" className="w-full gap-2 sm:w-auto" onClick={() => void handleSignOut()}>
-            <LogOut className="h-4 w-4" /> Sign out
+          <Button variant="ghost" size="sm" className="w-full gap-2 sm:w-auto" onClick={() => void handleExit()}>
+            <LogOut className="h-4 w-4" /> Exit demo
           </Button>
         </footer>
       </div>
