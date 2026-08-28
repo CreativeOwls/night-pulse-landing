@@ -1,7 +1,7 @@
 import { DollarSign, TrendingUp, Users, Wine } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-import { KPIS } from "@/lib/nightpulse-data";
+import type { Kpi } from "@/lib/nightpulse-data";
 
 const ICONS: Record<string, LucideIcon> = {
   revenue: DollarSign,
@@ -10,13 +10,13 @@ const ICONS: Record<string, LucideIcon> = {
   door: TrendingUp,
 };
 
-export function KpiGrid() {
+export function KpiGrid({ kpis }: { kpis: Kpi[] }) {
   return (
     <section
       aria-label="Key performance indicators"
       className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
     >
-      {KPIS.map((kpi, i) => {
+      {kpis.map((kpi, i) => {
         const Icon = ICONS[kpi.id] ?? TrendingUp;
         return (
           <article
