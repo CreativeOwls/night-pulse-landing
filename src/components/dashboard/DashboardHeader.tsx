@@ -1,4 +1,4 @@
-import { Bot, CalendarDays, Sparkles } from "lucide-react";
+import { Bot, CalendarDays } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -28,11 +28,7 @@ export function DashboardHeader({
   return (
     <header className="np-glass sticky top-0 z-30 rounded-2xl px-4 py-4 sm:px-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3">
-          <div className="np-glow-violet flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--np-violet-soft)]">
-            <Sparkles className="h-5 w-5 text-[var(--np-violet)]" />
-          </div>
-          <div className="min-w-0">
+        <div className="min-w-0">
             <h1 className="truncate text-lg font-semibold tracking-tight text-foreground sm:text-xl">
               NightPulse AI
             </h1>
