@@ -20,7 +20,7 @@ function textBox(
   objectId: string,
   text: string,
   box: { x: number; y: number; w: number; h: number },
-  style: { size: number; bold?: boolean; color: Rgb; spacing?: number },
+  style: { size: number; bold?: boolean; color: Rgb },
 ) {
   return [
     {
