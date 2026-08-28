@@ -23,12 +23,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return () => {
-      active = false;
-      sub.subscription.unsubscribe();
-    };
-  }, [navigate]);
-
   return (
     <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-background px-4 py-10 sm:px-6 lg:px-8">
       <ConstellationBackdrop />
