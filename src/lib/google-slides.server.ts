@@ -52,7 +52,6 @@ function textBox(
           fontFamily: "Arial",
           fontSize: { magnitude: style.size, unit: "PT" },
           foregroundColor: { opaqueColor: { rgbColor: style.color } },
-          ...(style.spacing ? { weightedFontFamily: undefined } : {}),
         },
         textRange: { type: "ALL" },
         fields: "bold,fontFamily,fontSize,foregroundColor",
