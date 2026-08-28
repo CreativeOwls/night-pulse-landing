@@ -54,7 +54,7 @@ export function PulseAssistant({ open, onOpenChange, onOpenDeck }: Props) {
         content: answer.content,
         bullets: answer.bullets,
         timestamp: now(),
-        action: answer.action,
+        ...(answer.action ? { action: answer.action } : {}),
       },
     ]);
     setThinking(false);
