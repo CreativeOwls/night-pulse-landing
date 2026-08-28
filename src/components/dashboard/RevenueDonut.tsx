@@ -1,20 +1,22 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
-import { REVENUE_SPLIT } from "@/lib/nightpulse-data";
+import type { RevenueSlice } from "@/lib/nightpulse-data";
 
-export function RevenueDonut() {
+type Props = { split: RevenueSlice[]; total: string };
+
+export function RevenueDonut({ split, total }: Props) {
   return (
     <article className="np-glass np-rise rounded-2xl p-5">
       <header className="mb-2">
         <h2 className="text-sm font-semibold tracking-tight text-foreground">Revenue Split</h2>
-        <p className="text-xs text-muted-foreground">Share of $68,450 gross</p>
+        <p className="text-xs text-muted-foreground">Share of {total} gross</p>
       </header>
 
       <div className="relative h-[190px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={REVENUE_SPLIT}
+              data={split}
               dataKey="share"
               nameKey="name"
               innerRadius={58}
@@ -22,13 +24,13 @@ export function RevenueDonut() {
               paddingAngle={3}
               stroke="none"
             >
-              {REVENUE_SPLIT.map((slice) => (
+              {split.map((slice) => (
                 <Cell key={slice.name} fill={slice.token} />
               ))}
             </Pie>
             <Tooltip
               formatter={(value: number, name: string) => {
-                const slice = REVENUE_SPLIT.find((s) => s.name === name);
+                const slice = split.find((s) => s.name === name);
                 return [`${value}% · $${slice?.value.toLocaleString()}`, name];
               }}
               contentStyle={{
@@ -42,13 +44,13 @@ export function RevenueDonut() {
           </PieChart>
         </ResponsiveContainer>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xl font-semibold text-foreground">$68,450</span>
+          <span className="text-xl font-semibold text-foreground">{total}</span>
           <span className="text-xs text-muted-foreground">Total gross</span>
         </div>
       </div>
 
       <ul className="mt-3 space-y-2">
-        {REVENUE_SPLIT.map((slice) => (
+        {split.map((slice) => (
           <li key={slice.name} className="flex items-center justify-between gap-3 text-sm">
             <span className="flex items-center gap-2 text-muted-foreground">
               <span

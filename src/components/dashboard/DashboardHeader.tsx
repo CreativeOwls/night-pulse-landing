@@ -8,18 +8,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { VENUE } from "@/lib/nightpulse-data";
+import { DATE_OPTIONS, VENUE } from "@/lib/nightpulse-data";
 
 type Props = {
   date: string;
+  headline: string;
   onDateChange: (value: string) => void;
   onAskAgent: () => void;
   onGenerateDeck: () => void;
 };
 
-const DATES = ["Friday, August 21", "Saturday, August 22", "Friday, August 14"];
-
-export function DashboardHeader({ date, onDateChange, onAskAgent, onGenerateDeck }: Props) {
+export function DashboardHeader({
+  date,
+  headline,
+  onDateChange,
+  onAskAgent,
+  onGenerateDeck,
+}: Props) {
   return (
     <header className="np-glass sticky top-0 z-30 rounded-2xl px-4 py-4 sm:px-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -32,7 +37,7 @@ export function DashboardHeader({ date, onDateChange, onAskAgent, onGenerateDeck
               NightPulse AI
             </h1>
             <p className="text-xs text-muted-foreground">
-              {VENUE.venue} — {VENUE.eventLabel}
+              {VENUE.venue} — {VENUE.eventLabel} · {headline}
             </p>
           </div>
         </div>
@@ -48,7 +53,7 @@ export function DashboardHeader({ date, onDateChange, onAskAgent, onGenerateDeck
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {DATES.map((d) => (
+                {DATE_OPTIONS.map((d) => (
                   <SelectItem key={d} value={d}>
                     {d}
                   </SelectItem>

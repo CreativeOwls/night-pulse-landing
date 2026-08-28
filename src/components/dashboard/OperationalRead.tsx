@@ -1,6 +1,6 @@
-import { OPERATIONAL_READ } from "@/lib/nightpulse-data";
+import type { OperationalItem } from "@/lib/nightpulse-data";
 
-export function OperationalRead() {
+export function OperationalRead({ items }: { items: OperationalItem[] }) {
   return (
     <section className="np-glass np-rise rounded-2xl p-5">
       <header className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
@@ -9,7 +9,7 @@ export function OperationalRead() {
       </header>
 
       <dl className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
-        {OPERATIONAL_READ.map((item) => (
+        {items.map((item) => (
           <div
             key={item.label}
             className="rounded-xl border border-[var(--np-hairline)] bg-[var(--np-surface-strong)] p-4"

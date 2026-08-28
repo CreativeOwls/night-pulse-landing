@@ -9,9 +9,16 @@ import {
   YAxis,
 } from "recharts";
 
-import { FOOT_TRAFFIC } from "@/lib/nightpulse-data";
+import type { TrafficPoint } from "@/lib/nightpulse-data";
 
-export function TrafficChart() {
+type Props = {
+  data: TrafficPoint[];
+  peakWindow: string;
+  peakStart: string;
+  peakEnd: string;
+};
+
+export function TrafficChart({ data, peakWindow, peakStart, peakEnd }: Props) {
   return (
     <article className="np-glass np-rise rounded-2xl p-5 xl:col-span-2">
       <header className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
@@ -22,13 +29,13 @@ export function TrafficChart() {
           <p className="text-xs text-muted-foreground">10 PM – 4 AM · entries vs live occupancy</p>
         </div>
         <span className="rounded-full bg-[var(--np-violet-soft)] px-3 py-1 text-xs font-medium text-[var(--np-violet)]">
-          Peak 11:30 PM – 1:00 AM
+          Peak {peakWindow}
         </span>
       </header>
 
       <div className="h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={FOOT_TRAFFIC} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
             <defs>
               <linearGradient id="npEntries" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--np-violet)" stopOpacity={0.55} />
@@ -53,7 +60,7 @@ export function TrafficChart() {
               tickLine={false}
               axisLine={false}
             />
-            <ReferenceArea x1="11:30 PM" x2="1:00 AM" fill="var(--np-violet)" fillOpacity={0.07} />
+            <ReferenceArea x1={peakStart} x2={peakEnd} fill="var(--np-violet)" fillOpacity={0.07} />
             <Tooltip
               cursor={{ stroke: "var(--np-violet)", strokeOpacity: 0.4 }}
               contentStyle={{
