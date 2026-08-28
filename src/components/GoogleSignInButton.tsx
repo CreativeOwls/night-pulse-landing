@@ -53,7 +53,13 @@ export function GoogleSignInButton() {
   };
 
   return (
-    <Button variant="google" size="pill" disabled={pending} onClick={handleSignIn}>
+    <Button
+      variant="google"
+      size="pill"
+      disabled={pending}
+      onClick={handleSignIn}
+      className="w-full max-w-xs sm:w-auto sm:max-w-none"
+    >
       <GoogleIcon />
       {pending ? "Signing in…" : "Sign in with Google"}
     </Button>

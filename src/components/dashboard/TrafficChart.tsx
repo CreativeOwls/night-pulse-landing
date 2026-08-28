@@ -33,9 +33,9 @@ export function TrafficChart({ data, peakWindow, peakStart, peakEnd }: Props) {
         </span>
       </header>
 
-      <div className="h-[280px] w-full">
+      <div className="h-[220px] w-full sm:h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 8, right: 8, left: -22, bottom: 0 }}>
             <defs>
               <linearGradient id="npEntries" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="var(--np-violet)" stopOpacity={0.55} />

@@ -56,7 +56,7 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] max-w-4xl overflow-y-auto border-[var(--np-hairline)] bg-[var(--np-surface-strong)] backdrop-blur-xl">
+      <DialogContent className="max-h-[92vh] w-[calc(100vw-2rem)] max-w-4xl overflow-x-hidden overflow-y-auto border-[var(--np-hairline)] bg-[var(--np-surface-strong)] p-4 backdrop-blur-xl sm:p-6">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Presentation className="h-5 w-5 text-[var(--np-violet)]" />
@@ -65,16 +65,16 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
           <DialogDescription>{deck.subtitle}</DialogDescription>
         </DialogHeader>
 
-        <div className="np-glass np-noise relative overflow-hidden rounded-2xl p-6 sm:p-8">
+        <div className="np-glass np-noise relative overflow-hidden rounded-2xl p-4 sm:p-6 lg:p-8">
           <p className="text-xs font-semibold tracking-[0.18em] text-[var(--np-violet)] uppercase">
             {slide.kicker}
           </p>
-          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+          <h3 className="mt-2 text-xl font-semibold tracking-tight text-foreground sm:text-2xl lg:text-3xl">
             {slide.title}
           </h3>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{slide.summary}</p>
+          <p className="mt-2 max-w-[65ch] text-sm leading-relaxed text-muted-foreground">{slide.summary}</p>
 
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="mt-5 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-4">
             {slide.metrics.map((metric) => (
               <div
                 key={metric.label}
@@ -90,7 +90,7 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
 
           <ul className="mt-5 space-y-2.5">
             {slide.bullets.map((bullet) => (
-              <li key={bullet} className="flex gap-3 text-sm text-foreground">
+              <li key={bullet} className="flex max-w-[70ch] gap-3 text-sm leading-relaxed text-foreground">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--np-violet)]" />
                 <span>{bullet}</span>
               </li>
@@ -100,7 +100,7 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
           <p className="mt-6 text-xs text-muted-foreground">{slide.footnote}</p>
         </div>
 
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -138,11 +138,11 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
           </Button>
         </div>
 
-        <div className="flex flex-wrap gap-2 border-t border-[var(--np-hairline)] pt-4">
+        <div className="grid grid-cols-1 gap-2 border-t border-[var(--np-hairline)] pt-4 sm:flex sm:flex-wrap">
           <Button
             variant="outline"
             size="sm"
-            className="gap-2"
+            className="w-full gap-2 sm:w-auto"
             onClick={() => {
               download(
                 "nightpulse-deck.json",
@@ -157,7 +157,7 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
           <Button
             variant="outline"
             size="sm"
-            className="gap-2"
+            className="w-full gap-2 sm:w-auto"
             onClick={() => {
               download(
                 "nightpulse-deck.md",
@@ -172,7 +172,7 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
           <Button
             variant="outline"
             size="sm"
-            className="gap-2"
+            className="w-full gap-2 sm:w-auto"
             onClick={async () => {
               try {
                 await navigator.clipboard.writeText(deckToBrief(deck));
@@ -186,7 +186,7 @@ export function DeckGenerator({ open, onOpenChange, deck }: Props) {
           </Button>
           <Button
             size="sm"
-            className="np-glow-violet ml-auto gap-2 bg-[var(--np-violet)] text-white hover:bg-[var(--np-violet)]/90"
+            className="np-glow-violet w-full gap-2 sm:ml-auto sm:w-auto bg-[var(--np-violet)] text-white hover:bg-[var(--np-violet)]/90"
             onClick={() => void handleGoogleSlides()}
             disabled={exporting}
           >

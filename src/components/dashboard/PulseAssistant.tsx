@@ -124,13 +124,13 @@ export function PulseAssistant({ open, onOpenChange, onOpenDeck }: Props) {
         </ScrollArea>
 
         <div className="space-y-3 border-t border-[var(--np-hairline)] p-4">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             {SUGGESTED_QUERIES.map((query) => (
               <button
                 key={query.id}
                 type="button"
                 onClick={() => void send(query.prompt)}
-                className="rounded-full border border-[var(--np-hairline)] px-3 py-1.5 text-left text-xs text-muted-foreground transition-colors hover:border-[var(--np-violet)] hover:text-foreground"
+                className="min-h-11 w-full rounded-xl border border-[var(--np-hairline)] px-3 py-2 text-left text-xs text-muted-foreground transition-colors hover:border-[var(--np-violet)] hover:text-foreground active:border-[var(--np-violet)] active:text-foreground sm:min-h-9 sm:w-auto sm:rounded-full"
               >
                 {query.label}
               </button>
@@ -149,7 +149,7 @@ export function PulseAssistant({ open, onOpenChange, onOpenDeck }: Props) {
               onChange={(event) => setInput(event.target.value)}
               placeholder="Ask about the night… or type “Create slides”"
               aria-label="Message the Pulse assistant"
-              className="bg-[oklch(1_0_0/0.04)]"
+              className="h-11 bg-[oklch(1_0_0/0.04)] text-base sm:h-9 sm:text-sm"
             />
             <Button
               type="submit"
