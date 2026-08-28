@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { LogOut } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,8 @@ import { PulseAssistant } from "@/components/dashboard/PulseAssistant";
 import { RevenueDonut } from "@/components/dashboard/RevenueDonut";
 import { TrafficChart } from "@/components/dashboard/TrafficChart";
 import { supabase } from "@/integrations/supabase/client";
-import { VENUE } from "@/lib/nightpulse-data";
+import { DEFAULT_DATE, getDataset } from "@/lib/nightpulse-data";
+import { buildDeck } from "@/lib/deck";
 
 const title = "NightPulse AI — LIV Miami Friday Night Recap";
 const description =
@@ -38,7 +39,9 @@ function Dashboard() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [date, setDate] = useState(VENUE.date);
+  const [date, setDate] = useState(DEFAULT_DATE);
+  const dataset = useMemo(() => getDataset(date), [date]);
+  const deck = useMemo(() => buildDeck(dataset), [dataset]);
   const [assistantOpen, setAssistantOpen] = useState(false);
   const [deckOpen, setDeckOpen] = useState(false);
 
@@ -54,21 +57,27 @@ function Dashboard() {
       <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-5 p-4 sm:p-6">
         <DashboardHeader
           date={date}
+          headline={dataset.headline}
           onDateChange={setDate}
           onAskAgent={() => setAssistantOpen(true)}
           onGenerateDeck={() => setDeckOpen(true)}
         />
 
         <main className="flex flex-col gap-5">
-          <KpiGrid />
+          <KpiGrid kpis={dataset.kpis} />
 
           <section aria-label="Analytics" className="grid grid-cols-1 gap-5 xl:grid-cols-4">
-            <TrafficChart />
-            <DrinksChart />
-            <RevenueDonut />
+            <TrafficChart
+              data={dataset.footTraffic}
+              peakWindow={dataset.peakWindow}
+              peakStart={dataset.peakWindowStart}
+              peakEnd={dataset.peakWindowEnd}
+            />
+            <DrinksChart drinks={dataset.drinks} />
+            <RevenueDonut split={dataset.revenueSplit} total={dataset.totalRevenueLabel} />
           </section>
 
-          <OperationalRead />
+          <OperationalRead items={dataset.operationalRead} />
         </main>
 
         <footer className="flex flex-wrap items-center justify-between gap-3 pb-4 text-xs text-muted-foreground">
@@ -86,7 +95,7 @@ function Dashboard() {
         onOpenChange={setAssistantOpen}
         onOpenDeck={() => setDeckOpen(true)}
       />
-      <DeckGenerator open={deckOpen} onOpenChange={setDeckOpen} />
+      <DeckGenerator open={deckOpen} onOpenChange={setDeckOpen} deck={deck} />
     </div>
   );
 }
