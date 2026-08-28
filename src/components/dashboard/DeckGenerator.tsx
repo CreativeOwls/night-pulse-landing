@@ -19,10 +19,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { deckToBrief, deckToMarkdown, EXECUTIVE_DECK } from "@/lib/deck";
+import { deckToBrief, deckToMarkdown, type Deck } from "@/lib/deck";
 import { exportToGoogleSlides } from "@/lib/google-slides.functions";
 
-type Props = { open: boolean; onOpenChange: (open: boolean) => void };
+type Props = { open: boolean; onOpenChange: (open: boolean) => void; deck: Deck };
 
 function download(filename: string, content: string, type: string) {
   const url = URL.createObjectURL(new Blob([content], { type }));
@@ -33,16 +33,16 @@ function download(filename: string, content: string, type: string) {
   URL.revokeObjectURL(url);
 }
 
-export function DeckGenerator({ open, onOpenChange }: Props) {
+export function DeckGenerator({ open, onOpenChange, deck }: Props) {
   const [index, setIndex] = useState(0);
   const [exporting, setExporting] = useState(false);
-  const slides = EXECUTIVE_DECK.slides;
+  const slides = deck.slides;
   const slide = slides[index]!;
 
   const handleGoogleSlides = async () => {
     setExporting(true);
     try {
-      const result = await exportToGoogleSlides({ data: EXECUTIVE_DECK });
+      const result = await exportToGoogleSlides({ data: deck });
       window.open(result.url, "_blank", "noopener,noreferrer");
       toast.success("Deck created in Google Slides", {
         action: { label: "Open", onClick: () => window.open(result.url, "_blank") },
@@ -62,7 +62,7 @@ export function DeckGenerator({ open, onOpenChange }: Props) {
             <Presentation className="h-5 w-5 text-[var(--np-violet)]" />
             Executive Slide Deck
           </DialogTitle>
-          <DialogDescription>{EXECUTIVE_DECK.subtitle}</DialogDescription>
+          <DialogDescription>{deck.subtitle}</DialogDescription>
         </DialogHeader>
 
         <div className="np-glass np-noise relative overflow-hidden rounded-2xl p-6 sm:p-8">
@@ -146,7 +146,7 @@ export function DeckGenerator({ open, onOpenChange }: Props) {
             onClick={() => {
               download(
                 "nightpulse-deck.json",
-                JSON.stringify(EXECUTIVE_DECK, null, 2),
+                JSON.stringify(deck, null, 2),
                 "application/json",
               );
               toast.success("Deck JSON downloaded");
@@ -161,7 +161,7 @@ export function DeckGenerator({ open, onOpenChange }: Props) {
             onClick={() => {
               download(
                 "nightpulse-deck.md",
-                deckToMarkdown(EXECUTIVE_DECK),
+                deckToMarkdown(deck),
                 "text/markdown;charset=utf-8",
               );
               toast.success("Deck Markdown downloaded");
@@ -175,7 +175,7 @@ export function DeckGenerator({ open, onOpenChange }: Props) {
             className="gap-2"
             onClick={async () => {
               try {
-                await navigator.clipboard.writeText(deckToBrief(EXECUTIVE_DECK));
+                await navigator.clipboard.writeText(deckToBrief(deck));
                 toast.success("Executive brief copied to clipboard");
               } catch {
                 toast.error("Clipboard permission denied");
