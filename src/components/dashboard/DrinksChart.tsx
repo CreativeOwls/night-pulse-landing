@@ -1,10 +1,10 @@
 import { Flame } from "lucide-react";
 
-import { TOP_DRINKS } from "@/lib/nightpulse-data";
+import type { Drink } from "@/lib/nightpulse-data";
 
-const max = Math.max(...TOP_DRINKS.map((d) => d.revenue));
+export function DrinksChart({ drinks }: { drinks: Drink[] }) {
+  const max = Math.max(...drinks.map((d) => d.revenue));
 
-export function DrinksChart() {
   return (
     <article className="np-glass np-rise rounded-2xl p-5">
       <header className="mb-4">
@@ -15,7 +15,7 @@ export function DrinksChart() {
       </header>
 
       <ul className="space-y-4">
-        {TOP_DRINKS.map((drink) => (
+        {drinks.map((drink) => (
           <li key={drink.name}>
             <div className="flex items-baseline justify-between gap-3">
               <p className="truncate text-sm font-medium text-foreground">
@@ -28,7 +28,7 @@ export function DrinksChart() {
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-[oklch(1_0_0/0.06)]">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-[var(--np-violet)] to-[var(--np-emerald)]"
+                className="h-full rounded-full bg-gradient-to-r from-[var(--np-violet)] to-[var(--np-emerald)] transition-[width] duration-500"
                 style={{
                   width: `${Math.round((drink.revenue / max) * 100)}%`,
                   boxShadow: "0 0 14px -2px var(--np-violet)",
