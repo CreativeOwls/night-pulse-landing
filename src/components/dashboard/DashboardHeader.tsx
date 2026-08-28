@@ -29,13 +29,12 @@ export function DashboardHeader({
     <header className="np-glass sticky top-0 z-30 rounded-2xl px-4 py-4 sm:px-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="min-w-0">
-            <h1 className="truncate text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-              NightPulse AI
-            </h1>
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              {VENUE.venue} — {VENUE.eventLabel} · {headline}
-            </p>
-          </div>
+          <h1 className="truncate text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+            NightPulse AI
+          </h1>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {VENUE.venue} — {VENUE.eventLabel} · {headline}
+          </p>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
