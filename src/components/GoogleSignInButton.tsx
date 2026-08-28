@@ -45,7 +45,7 @@ export function GoogleSignInButton() {
 
       if (result.redirected) return;
 
-      window.location.assign("/");
+      window.location.assign("/dashboard");
     } catch {
       toast.error("Could not sign in with Google. Please try again.");
       setPending(false);
