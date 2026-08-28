@@ -223,3 +223,79 @@
     animation: none;
   }
 }
+
+/* --- NightPulse AI dashboard --- */
+
+:root {
+  --np-violet: oklch(0.68 0.19 300);
+  --np-violet-soft: oklch(0.68 0.19 300 / 0.16);
+  --np-emerald: oklch(0.78 0.15 162);
+  --np-emerald-soft: oklch(0.78 0.15 162 / 0.16);
+  --np-cyan: oklch(0.78 0.11 220);
+  --np-surface: oklch(0.17 0.012 265 / 0.62);
+  --np-surface-strong: oklch(0.2 0.014 265 / 0.9);
+  --np-hairline: oklch(1 0 0 / 0.08);
+  --np-grid: radial-gradient(
+      circle at 15% 0%,
+      oklch(0.68 0.19 300 / 0.14) 0%,
+      transparent 45%
+    ),
+    radial-gradient(circle at 85% 10%, oklch(0.78 0.15 162 / 0.1) 0%, transparent 48%);
+}
+
+@utility np-app-bg {
+  background-color: oklch(0.11 0.012 265);
+  background-image: var(--np-grid);
+}
+
+@utility np-glass {
+  background-color: var(--np-surface);
+  border: 1px solid var(--np-hairline);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px -28px oklch(0 0 0 / 0.9);
+}
+
+@utility np-glow-violet {
+  box-shadow: 0 0 0 1px oklch(0.68 0.19 300 / 0.28), 0 18px 50px -26px oklch(0.68 0.19 300 / 0.65);
+}
+
+@utility np-noise {
+  background-image: radial-gradient(oklch(1 0 0 / 0.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+@keyframes np-live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@utility np-live-dot {
+  animation: np-live 1.8s ease-in-out infinite;
+}
+
+@keyframes np-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility np-rise {
+  animation: np-rise 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .np-live-dot,
+  .np-rise {
+    animation: none;
+  }
+}
