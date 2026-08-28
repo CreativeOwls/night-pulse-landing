@@ -53,8 +53,8 @@ function Dashboard() {
   };
 
   return (
-    <div className="np-app-bg min-h-screen w-full">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-5 p-4 sm:p-6">
+    <div className="np-app-bg min-h-screen w-full overflow-x-hidden">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 p-4 sm:gap-5 sm:p-6 lg:p-8">
         <DashboardHeader
           date={date}
           headline={dataset.headline}
@@ -63,10 +63,10 @@ function Dashboard() {
           onGenerateDeck={() => setDeckOpen(true)}
         />
 
-        <main className="flex flex-col gap-5">
+        <main className="flex flex-col gap-4 sm:gap-5">
           <KpiGrid kpis={dataset.kpis} />
 
-          <section aria-label="Analytics" className="grid grid-cols-1 gap-5 xl:grid-cols-4">
+          <section aria-label="Analytics" className="grid grid-cols-1 gap-4 sm:gap-5 xl:grid-cols-4">
             <TrafficChart
               data={dataset.footTraffic}
               peakWindow={dataset.peakWindow}
@@ -80,11 +80,11 @@ function Dashboard() {
           <OperationalRead items={dataset.operationalRead} />
         </main>
 
-        <footer className="flex flex-wrap items-center justify-between gap-3 pb-4 text-xs text-muted-foreground">
-          <span>
+        <footer className="flex flex-col items-start gap-3 pb-4 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+          <span className="min-w-0 break-words">
             Signed in as {user.email ?? user.id} · {date}
           </span>
-          <Button variant="ghost" size="sm" className="gap-2" onClick={() => void handleSignOut()}>
+          <Button variant="ghost" size="sm" className="w-full gap-2 sm:w-auto" onClick={() => void handleSignOut()}>
             <LogOut className="h-4 w-4" /> Sign out
           </Button>
         </footer>

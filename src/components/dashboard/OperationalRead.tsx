@@ -8,7 +8,7 @@ export function OperationalRead({ items }: { items: OperationalItem[] }) {
         <p className="text-xs text-muted-foreground">Door, occupancy and VIP service summary</p>
       </header>
 
-      <dl className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
+      <dl className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-4 md:grid-cols-3 xl:grid-cols-6">
         {items.map((item) => (
           <div
             key={item.label}
